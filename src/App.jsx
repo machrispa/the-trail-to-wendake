@@ -1192,7 +1192,6 @@ export default function App() {
         <div className="text-center scale-90">
           <div className="flex gap-2 justify-center">
             <Button onClick={advanceTravel} className="w-40" disabled={isMoving}>{isMoving ? "Paddling..." : "Paddle"}</Button>
-            <Button onClick={() => setGameState('MENU')} variant="secondary">Camp</Button>
           </div>
         </div>
       </Panel>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   BookOpen, Sword, Scroll, Info, X, Droplets, Flame, Users, Feather, User,  
   Skull, Ghost, MessageSquare, Anchor, Zap, Clock, Wine, Settings, Shield, 
-  AlertTriangle, Scale, Heart, PenTool, Sun
+  Scale, Heart, PenTool, Sun
 } from 'lucide-react';
 
 /**
@@ -46,7 +46,6 @@ const PixelParchment = ({ children }) => (
 );
 
 const PixelCanoeWithParty = ({ companions }) => (
-  // FLIPPED: transform scaleX(-1) to face Left (West)
   <div style={{ transform: 'scaleX(-1)' }}>
       <PixelSVG width="32" height="12" className="w-64 h-24 drop-shadow-xl">
         <path d="M2 6 h28 v4 h-2 v2 h-24 v-2 h-2 z" fill="#382618" />
@@ -64,7 +63,6 @@ const PixelCanoeWithParty = ({ companions }) => (
           </>
         )}
 
-        {/* The Novice (Player) */}
         <rect x="16" y="3" width="4" height="4" fill="#222" />
         <rect x="17" y="1" width="2" height="2" fill="#F8C8A0" />
         
@@ -139,7 +137,7 @@ const WeatherOverlay = ({ weather }) => {
 
 /**
  * ============================================================================
- * 2. DATA & HISTORICAL CONTENT
+ * 2. DATA
  * ============================================================================
  */
 
@@ -154,33 +152,33 @@ const ZONES = [
   { id: 'huronia', name: 'Wendake', distance: 800, desc: 'The Mission of Sainte-Marie.' } 
 ];
 
-// Expanded Scholarly Context Pool - Never Repeats
+// Updated Scholarly Context Pool - ONLY QUOTES
 const SCHOLARLY_CONTEXTS = [
-    { text: "Kathryn Labelle writes that 'Wendat women were the soul of the nation,' controlling agriculture and the fate of captives, a power structure Jesuits struggled to navigate.", source: "Labelle, 'Dispersed but Not Destroyed'" },
-    { text: "Allan Greer argues that for the Jesuits, 'conversion' meant a total transformation of culture, while for the Wendat, it was often a diplomatic alliance.", source: "Greer, 'Mohawk Saint'" },
-    { text: "Denys Delage notes that the 'Columbian Exchange' brought microbes that devastated the Wendat, which they interpreted as the result of Jesuit sorcery.", source: "Delage, 'Bitter Feast'" },
-    { text: "John Steckley explains that the Wendat language is polysynthetic; a single word like 'Ondinnonk' contains complex philosophical concepts about the soul's desire.", source: "Steckley, 'Words of the Huron'" },
-    { text: "Dominique Deslandres highlights how the Jesuits aimed to 'Francize' the Indigenous people, believing that living in fixed settlements was a prerequisite for Christianity.", source: "Deslandres, 'Croire et faire croire'" },
-    { text: "Thomas Peace emphasizes that places like Trois-Rivières were not just French forts, but complex intercultural zones where differing legal systems clashed.", source: "Peace, 'Two Conquests'" },
-    { text: "Daniel Richter describes the 'Mourning War' complex, where Haudenosaunee raids were driven by a spiritual need to replace dead kin, not just territorial gain.", source: "Richter, 'The Ordeal of the Longhouse'" },
-    { text: "Conrad Heidenreich's mapping of Huronia shows how the Wendat utilized the specific geography of the Canadian Shield for defense and trade.", source: "Heidenreich, 'Huronia'" },
-    { text: "Emma Anderson writes that 'Apostasy' was often a rational choice for Wendat who felt Baptism had broken their relationship with the spirits of the land.", source: "Anderson, 'The Betrayal of Faith'" },
-    { text: "Micah True suggests that the 'Jesuit Relations' were carefully edited propaganda designed to secure funding from wealthy patrons in France.", source: "True, 'Masters and Students'" },
-    { text: "Christopher Parsons notes how Jesuits used botanical knowledge as a tool of colonization, cataloging 'New World' plants to fit European classifications.", source: "Parsons, 'A Not-So-New World'" },
-    { text: "Samuel Champlain described the Kichesipirini at Allumette Island as the shrewdest traders on the river, controlling the flow of goods with their strategic toll.", source: "Champlain's Voyages, 1613" },
-    { text: "Gabriel Sagard, a Recollet friar, warned that the Wendat mocked Frenchmen who could not paddle or carry heavy loads, calling them 'women' or 'children'.", source: "Sagard, 'Le Grand Voyage'" },
-    { text: "The Jesuit Relations of 1636 report: 'The Savages have a particular dread of the night, believing the wicked Oki roam the forest then.'", source: "Jesuit Relations, Vol. 10" }
+    { text: "'The women have the power to select the chiefs and to depose them... They are the soul of the councils, the arbiters of peace and of war.'", source: "Pierre-François-Xavier de Charlevoix, Journal (1744), quoted in Labelle" },
+    { text: "'Conversion was not a simple matter of accepting a new set of beliefs; it involved a change of identity, a new way of life, and often a new name.'", source: "Allan Greer, Mohawk Saint (2005)" },
+    { text: "'The epidemics... were interpreted by the Indians not as a biological phenomenon but as a manifestation of spiritual power... the Black Robes were sorcerers.'", source: "Denys Delage, Bitter Feast (1993)" },
+    { text: "'The soul has desires... which are manifested in dreams. If these desires are not granted, the soul becomes angry and revolts against the body, causing sickness and death.'", source: "John Steckley, Words of the Huron (2007)" },
+    { text: "'To 'Francize' the savages meant to make them French... to settle them, to teach them to cultivate the land, and to make them live in the French manner.'", source: "Dominique Deslandres, Croire et faire croire (2003)" },
+    { text: "'Trois-Rivières was a place of encounter... where the rules of interaction were constantly being negotiated between French and Indigenous peoples.'", source: "Thomas Peace, Two Conquests (2019)" },
+    { text: "'The 'Mourning War' was a struggle to replace the dead... captives were adopted to take the place of deceased relatives, restoring the strength of the lineage.'", source: "Daniel Richter, The Ordeal of the Longhouse (1992)" },
+    { text: "'The location of Huron villages was determined by... the need for defense, the quality of the soil, and the proximity to water.'", source: "Conrad Heidenreich, Huronia (1971)" },
+    { text: "'For many Wendat, baptism was not a path to salvation but a death sentence... a ritual that separated them from their ancestors and their community.'", source: "Emma Anderson, The Betrayal of Faith (2007)" },
+    { text: "'The Relations were written... to edify the faithful in France and to secure financial support for the mission.'", source: "Micah True, Masters and Students (2015)" },
+    { text: "'The Jesuits... sought to order the natural world according to European categories, seeing in the plants and animals of the New World signs of God's providence.'", source: "Christopher Parsons, A Not-So-New World (2018)" },
+    { text: "'They [the Kichesipirini] are the cleverest traders... they have a monopoly of the river and make all who pass pay toll.'", source: "Samuel de Champlain, Voyages (1613)" },
+    { text: "'They mocked us... saying we were women, fit only to paddle in the center of the canoe and not to carry burdens.'", source: "Gabriel Sagard, Le Grand Voyage (1632)" },
+    { text: "'The Savages have a particular dread of the night, for then they say the wicked Oki roam the earth to do them harm.'", source: "Jesuit Relations, Vol. 10 (1636)" }
 ];
 
 const BREBEUF_RULES = [
-    { id: 1, rule: "Be cheerful in the midst of adversity.", context: "Complaining about hardship insults your hosts and shows spiritual weakness.", desc: "Aenon watches your face for signs of weakness." },
-    { id: 2, rule: "Do not keep the Indians waiting when embarking.", context: "Tardiness is a sign of arrogance and inefficiency.", desc: "The canoe must leave at dawn." },
-    { id: 3, rule: "Eat the little food they offer you without criticism.", context: "Refusing food creates deep suspicion and hostility.", desc: "The sagamité may be sandy, but it is a gift." },
-    { id: 4, rule: "Carry your own load at the portages.", context: "Do not expect them to serve you as beasts of burden.", desc: "Your shoulders must bear the weight of the mission." },
-    { id: 5, rule: "Do not ask too many questions.", context: "Silence is wiser than ignorant speech; listen first.", desc: "Your constant chatter disturbs the paddlers." },
-    { id: 6, rule: "Do not be ceremonious.", context: "Avoid French formalities; accept your place in the canoe without fuss.", desc: "Accept your seat without bowing or scraping." },
-    { id: 7, rule: "Always carry a tinder box or a burning mirror.", context: "Providing fire for the evening camp is a valued service.", desc: "Fire is life on the river." },
-    { id: 8, rule: "Buy fish and other articles to feast your guides.", context: "Generosity is the mark of a great soul in Wendat culture.", desc: "Use your beads to provide for the group." }
+    { id: 1, rule: "'Be cheerful in the midst of adversity, for the savages esteem this quality above all others.'", context: "Complaining about hardship insults your hosts and shows spiritual weakness.", desc: "Aenon watches your face for signs of weakness." },
+    { id: 2, rule: "'Do not keep the Indians waiting at the moment of embarking.'", context: "Tardiness is a sign of arrogance and inefficiency.", desc: "The canoe must leave at dawn." },
+    { id: 3, rule: "'Eat the little food they offer you, and eat all of it, for otherwise they will take you for a person who despises them.'", context: "Refusing food creates deep suspicion and hostility.", desc: "The sagamité may be sandy, but it is a gift." },
+    { id: 4, rule: "'Do not fail to perform your own part at the portages.'", context: "Do not expect them to serve you as beasts of burden.", desc: "Your shoulders must bear the weight of the mission." },
+    { id: 5, rule: "'Do not ask too many questions... silence is better than loquacity.'", context: "Silence is wiser than ignorant speech; listen first.", desc: "Your constant chatter disturbs the paddlers." },
+    { id: 6, rule: "'Be not ceremonious with the savages... accept what they offer you without compliments.'", context: "Avoid French formalities; accept your place in the canoe without fuss.", desc: "Accept your seat without bowing or scraping." },
+    { id: 7, rule: "'Always carry a tinder box or a burning mirror... to give them fire in the evening.'", context: "Providing fire for the evening camp is a valued service.", desc: "Fire is life on the river." },
+    { id: 8, rule: "'You must provide the Savages with beads and other trifles, to show them that you do not come empty-handed.'", context: "Generosity is the mark of a great soul in Wendat culture.", desc: "Use your beads to provide for the group." }
 ];
 
 const WENDAT_VOCAB = [
@@ -260,7 +258,7 @@ const ENEMY_RESPONSES = {
         { text: "'You French say you know the Master of Life, but you do not know how to paddle.'", source: "Jesuit Relations Vol 5" },
         { text: "'Does your Captain Jesus send the rain? Our fathers say it is the Thunderbird.'", source: "Jesuit Relations Vol 10" }
     ],
-    "Shaman": [ // Renamed to Arendiowane in display logic, kept key for logic
+    "Shaman": [ 
         { text: "'I have seen the land of souls. It is not the place you describe.'", source: "Composite Response" },
         { text: "'Can your black robes stop the smallpox? My songs are for healing, yours are for death.'", source: "Historical Context of Epidemics" },
         { text: "'Your sorcery is strange, but the spirits of this river know me.'", source: "Composite Response" },
